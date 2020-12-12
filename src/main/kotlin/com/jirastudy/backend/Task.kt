@@ -1,7 +1,7 @@
 package com.jirastudy.backend
 
-data class TaskResponse(
-        val data: List<Task>
+data class TaskListResponse(
+        val data: List<TaskResponse>
 )
 
 data class TaskRequest(
@@ -9,7 +9,7 @@ data class TaskRequest(
         val deadline: String,
         val difficulty: Int,
         val type: TaskType,
-        val status: Status,
+        val status: TaskStatus,
 )
 
 data class UpdateTaskRequest(
@@ -17,7 +17,7 @@ data class UpdateTaskRequest(
         val deadline: String?,
         val difficulty: Int?,
         val type: TaskType?,
-        val status: Status?,
+        val status: TaskStatus?,
 )
 
 data class Task(
@@ -26,10 +26,28 @@ data class Task(
         val deadline: String,
         val difficulty: Int,
         val type: TaskType,
-        val status: Status,
+        val status: TaskStatus,
 )
 
-enum class Status {
+data class SubTask(
+        val id: Long,
+        val title: String,
+        val difficulty: Int,
+        val type: TaskType,
+        val status: TaskStatus,
+)
+
+data class TaskResponse(
+        val id: Long,
+        val title: String,
+        val deadline: String,
+        val difficulty: Int,
+        val type: TaskType,
+        val status: TaskStatus,
+        val subTasksCount: Int
+)
+
+enum class TaskStatus {
     TODO,
     IN_PROGRESS,
     DONE,
@@ -38,4 +56,16 @@ enum class Status {
 enum class TaskType {
     TEST,
     ASSIGNMENT,
+}
+
+fun Task.toTaskResponse(subTasksCount: Int = 0): TaskResponse {
+    return TaskResponse(
+            this.id,
+            this.title,
+            this.deadline,
+            this.difficulty,
+            this.type,
+            this.status,
+            subTasksCount
+    )
 }

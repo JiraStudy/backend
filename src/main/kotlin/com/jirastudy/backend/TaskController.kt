@@ -6,21 +6,25 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class TaskController(
         @Autowired val repository: TaskRepository,
+        @Autowired val subTaskRepository: SubTaskRepository,
 ) {
 
     @GetMapping("/tasks")
-    fun getTask(@RequestParam completed: Boolean?): TaskResponse {
+    fun getTask(@RequestParam completed: Boolean?): TaskListResponse {
         val tasks = repository.getAll()
-        return TaskResponse(
-                completed?.let { isCompleted ->
+        return TaskListResponse(
+                (completed?.let { isCompleted ->
                     tasks.filter {
                         if (isCompleted) {
-                            it.status == Status.DONE
+                            it.status == TaskStatus.DONE
                         } else {
-                            it.status != Status.DONE
+                            it.status != TaskStatus.DONE
                         }
                     }
-                } ?: tasks
+                } ?: tasks).map {
+                    val subTasksCount = subTaskRepository.getAllByParentId(it.id)?.size ?: 0
+                    it.toTaskResponse(subTasksCount)
+                }
         )
     }
 
