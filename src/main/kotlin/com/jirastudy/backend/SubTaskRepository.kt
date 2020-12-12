@@ -20,7 +20,7 @@ class SubTaskRepository{
                 taskRequest.title,
                 taskRequest.difficulty,
                 taskRequest.type,
-                taskRequest.status,
+                taskRequest.status ?: TaskStatus.TODO,
         )
         parentSubTasks[subTask.id] = subTask
         return subTask

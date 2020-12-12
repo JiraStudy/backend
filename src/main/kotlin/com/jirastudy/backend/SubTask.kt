@@ -7,13 +7,21 @@ data class SubTaskListResponse(
 data class SubTaskRequest(
         val title: String,
         val difficulty: Int,
-        val type: TaskType,
-        val status: TaskStatus
+        val type: String,
+        val status: TaskStatus?
 )
 
 data class UpdateSubTaskRequest(
         val title: String?,
         val difficulty: Int?,
-        val type: TaskType?,
+        val type: String?,
         val status: TaskStatus?,
+)
+
+data class SubTask(
+        val id: Long,
+        val title: String,
+        val difficulty: Int,
+        val type: String,
+        val status: TaskStatus,
 )

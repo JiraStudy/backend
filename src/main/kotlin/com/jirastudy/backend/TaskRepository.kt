@@ -20,7 +20,7 @@ class TaskRepository{
                 taskRequest.deadline,
                 taskRequest.difficulty,
                 taskRequest.type,
-                taskRequest.status,
+                taskRequest.status ?: TaskStatus.TODO,
         )
         tasks[task.id] = task
         return task
