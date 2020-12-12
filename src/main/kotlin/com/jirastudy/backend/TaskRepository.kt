@@ -13,7 +13,18 @@ class TaskRepository{
 
     fun getById(id: Long): Task? = tasks[id]
 
-    fun save(taskRequest: TaskRequest) = save(tasks.size.toLong(), taskRequest)
+    fun save(taskRequest: TaskRequest): Task {
+        val task = Task(
+                (tasks.keys.toList().max() ?: 0L) + 1L,
+                taskRequest.title,
+                taskRequest.deadline,
+                taskRequest.difficulty,
+                taskRequest.type,
+                taskRequest.status,
+        )
+        tasks[task.id] = task
+        return task
+    }
 
     fun update(id: Long, taskRequest: UpdateTaskRequest): Task? {
         return tasks[id]?.let {
@@ -28,19 +39,6 @@ class TaskRepository{
             tasks[id] = task
             task
         }
-    }
-
-    private fun save(id: Long, taskRequest: TaskRequest): Task {
-        val task = Task(
-                id,
-                taskRequest.title,
-                taskRequest.deadline,
-                taskRequest.difficulty,
-                taskRequest.type,
-                taskRequest.status,
-        )
-        tasks[task.id] = task
-        return task
     }
 
     fun delete(id: Long) = tasks.remove(id)
