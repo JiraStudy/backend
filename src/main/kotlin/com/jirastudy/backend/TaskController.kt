@@ -9,7 +9,20 @@ class TaskController(
 ) {
 
     @GetMapping("/tasks")
-    fun getTask() = TaskResponse(repository.getAll())
+    fun getTask(@RequestParam completed: Boolean?): TaskResponse {
+        val tasks = repository.getAll()
+        return TaskResponse(
+                completed?.let { isCompleted ->
+                    tasks.filter {
+                        if (isCompleted) {
+                            it.status == Status.DONE
+                        } else {
+                            it.status != Status.DONE
+                        }
+                    }
+                } ?: tasks
+        )
+    }
 
     @PostMapping("/tasks")
     fun postTask(@RequestBody postBody: TaskRequest) = repository.save(postBody)

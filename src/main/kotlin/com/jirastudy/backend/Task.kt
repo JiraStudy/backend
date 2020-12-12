@@ -9,6 +9,7 @@ data class TaskRequest(
         val deadline: String,
         val difficulty: Int,
         val type: TaskType,
+        val status: Status,
 )
 
 data class Task(
@@ -17,7 +18,14 @@ data class Task(
         val deadline: String,
         val difficulty: Int,
         val type: TaskType,
+        val status: Status,
 )
+
+enum class Status {
+    TODO,
+    IN_PROGRESS,
+    DONE,
+}
 
 enum class TaskType {
     TEST,

@@ -2,7 +2,6 @@ package com.jirastudy.backend
 
 import org.springframework.stereotype.Component
 
-
 @Component
 class TaskRepository{
 
@@ -25,6 +24,7 @@ class TaskRepository{
                 taskRequest.deadline,
                 taskRequest.difficulty,
                 taskRequest.type,
+                taskRequest.status,
         )
         tasks[task.id] = task
         return task
