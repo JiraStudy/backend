@@ -9,7 +9,7 @@ class TaskController(
 ) {
 
     @GetMapping("/tasks")
-    fun getTask() = repository.getAll()
+    fun getTask() = TaskResponse(repository.getAll())
 
     @PostMapping("/tasks")
     fun postTask(@RequestBody postBody: TaskRequest) = repository.save(postBody)
