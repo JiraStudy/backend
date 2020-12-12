@@ -15,7 +15,20 @@ class TaskRepository{
 
     fun save(taskRequest: TaskRequest) = save(tasks.size.toLong(), taskRequest)
 
-    fun update(id: Long, task: TaskRequest) = save(id, task)
+    fun update(id: Long, taskRequest: UpdateTaskRequest): Task? {
+        return tasks[id]?.let {
+            val task = Task(
+                    id,
+                    taskRequest.title ?: it.title,
+                    taskRequest.deadline ?: it.deadline,
+                    taskRequest.difficulty ?: it.difficulty,
+                    taskRequest.type ?: it.type,
+                    taskRequest.status ?: it.status,
+            )
+            tasks[id] = task
+            task
+        }
+    }
 
     private fun save(id: Long, taskRequest: TaskRequest): Task {
         val task = Task(

@@ -12,6 +12,14 @@ data class TaskRequest(
         val status: Status,
 )
 
+data class UpdateTaskRequest(
+        val title: String?,
+        val deadline: String?,
+        val difficulty: Int?,
+        val type: TaskType?,
+        val status: Status?,
+)
+
 data class Task(
         val id: Long,
         val title: String,

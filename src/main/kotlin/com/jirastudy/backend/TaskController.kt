@@ -24,11 +24,15 @@ class TaskController(
         )
     }
 
+    @GetMapping("/tasks/{id}")
+    fun getTask(@PathVariable id: Long) = repository.getById(id) ?: throw ResourceNotFoundException()
+
     @PostMapping("/tasks")
     fun postTask(@RequestBody postBody: TaskRequest) = repository.save(postBody)
 
     @PutMapping("/tasks/{id}")
-    fun updateTask(@PathVariable id: Long, @RequestBody putBody: TaskRequest) = repository.update(id, putBody)
+    fun updateTask(@PathVariable id: Long, @RequestBody putBody: UpdateTaskRequest) =
+        repository.update(id, putBody) ?: throw ResourceNotFoundException()
 
     @DeleteMapping("/tasks/{id}")
     fun deleteTask(@PathVariable id: Long) = repository.delete(id)
