@@ -3,7 +3,7 @@ package com.jirastudy.backend
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 class TaskController(
         @Autowired val repository: TaskRepository,
